@@ -24,6 +24,6 @@ public class Participant {
     @Column(name = "middle_name", length = 50)
     private String middleName;
 
-    @OneToOne(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "participant", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private QrCode qrCode;
 }

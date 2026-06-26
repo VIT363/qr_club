@@ -6,8 +6,12 @@ import org.example.qr_club.service.QrCodeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
+import static org.example.qr_club.constants.ApiPaths.*;
+
 @RestController
-@RequestMapping("/api/qr-codes")
+@RequestMapping(QR_CODES)
 @RequiredArgsConstructor
 public class QrCodeController {
 
@@ -19,13 +23,13 @@ public class QrCodeController {
         return qrCodeService.createQrCode(participantId);
     }
 
-    @PutMapping("/{id}")
-    public QrCodeResponse regenerate(@PathVariable Long id) {
-        return qrCodeService.regenerate(id);
+    @PutMapping(UUID_PATH)
+    public QrCodeResponse regenerate(@PathVariable UUID uuid) {
+        return qrCodeService.regenerate(uuid);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        qrCodeService.delete(id);
+    @DeleteMapping(UUID_PATH)
+    public void delete(@PathVariable UUID uuid) {
+        qrCodeService.delete(uuid);
     }
 }

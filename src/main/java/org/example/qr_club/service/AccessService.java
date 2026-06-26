@@ -22,10 +22,6 @@ public class AccessService {
     public AccessResponse checkAccess(AccessRequest request) {
         UUID receivedUuid = request.uuid();
 
-        if (receivedUuid == null) {
-            throw new BadRequestException("UUID не может быть null");
-        }
-
         QrCode qrCode = qrCodeRepository.findByQrUuid(receivedUuid)
                 .orElseThrow(() -> new BadRequestException("Недействительный QR-код"));
 

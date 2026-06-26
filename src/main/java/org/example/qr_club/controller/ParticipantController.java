@@ -8,10 +8,10 @@ import org.example.qr_club.service.ParticipantService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import static org.example.qr_club.constants.ApiPaths.*;
 
 @RestController
-@RequestMapping("/api/participants")
+@RequestMapping(PARTICIPANTS)
 @RequiredArgsConstructor
 public class ParticipantController {
 
@@ -23,23 +23,12 @@ public class ParticipantController {
         return participantService.create(request);
     }
 
-    @GetMapping
-    public List<ParticipantResponse> getAll() {
-        return participantService.getAll();
-    }
-
-    @GetMapping("/{id}")
-    public ParticipantResponse getById(@PathVariable Long id) {
-        return participantService.getById(id);
-    }
-
-    @PutMapping("/{id}")
-    public ParticipantResponse update(@PathVariable Long id,
-                                      @Valid @RequestBody ParticipantRequest request) {
+    @PutMapping(ID_PATCH)
+    public ParticipantResponse update(@PathVariable Long id, @Valid @RequestBody ParticipantRequest request) {
         return participantService.update(id, request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(ID_PATCH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         participantService.delete(id);

@@ -47,25 +47,25 @@ public class QrCodeService {
         return saveAndMap(qrCode);
     }
 
-    public QrCodeResponse regenerate(Long qrCodeId) {
+    public QrCodeResponse regenerate(UUID qrUuid) {
 
-        if (qrCodeId == null) {
+        if (qrUuid == null) {
             throw new BadRequestException("ID не может быть null");
         }
 
-        QrCode qrCode = qrCodeRepository.findById(qrCodeId)
-                .orElseThrow(() -> new QrCodeNotFoundException(qrCodeId));
+        QrCode qrCode = qrCodeRepository.findByQrUuid(qrUuid)
+                .orElseThrow(() -> new QrCodeNotFoundException(qrUuid));
         return saveAndMap(qrCode);
     }
 
-    public void delete(Long qrCodeId) {
+    public void delete(UUID qrUuid) {
 
-        if (qrCodeId == null) {
+        if (qrUuid == null) {
             throw new BadRequestException("ID не может быть null");
         }
 
-        QrCode qrCode = qrCodeRepository.findById(qrCodeId)
-                .orElseThrow(() -> new QrCodeNotFoundException(qrCodeId));
+        QrCode qrCode = qrCodeRepository.findByQrUuid(qrUuid)
+                .orElseThrow(() -> new QrCodeNotFoundException(qrUuid));
         qrCodeRepository.delete(qrCode);
 
     }
