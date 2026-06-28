@@ -8,6 +8,7 @@ import org.example.qr_club.mapper.ParticipantMapper;
 import org.example.qr_club.model.Participant;
 import org.example.qr_club.model.QrCode;
 import org.example.qr_club.repository.ParticipantRepository;
+import org.example.qr_club.repository.QrCodeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,36 +18,34 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Transactional
 public class ParticipantService {
+
     private final ParticipantRepository participantRepository;
+    private final QrCodeRepository qrCodeRepository;
     private final ParticipantMapper participantMapper;
 
     public ParticipantResponse create(ParticipantRequest request) {
         Participant participant = participantMapper.toEntity(request);
-
         QrCode qrCode = new QrCode();
         qrCode.setQrUuid(UUID.randomUUID());
-
         participant.setQrCode(qrCode);
         qrCode.setParticipant(participant);
-
         Participant saved = participantRepository.save(participant);
-
         return participantMapper.toResponse(saved);
     }
 
-    public ParticipantResponse update(Long id, ParticipantRequest request) {
-        Participant participant = participantRepository.findById(id)
-                .orElseThrow(() -> new ParticipantNotFoundException(id));
+    public void updateByQrUuid(UUID qrUuid, ParticipantRequest request) {
+        QrCode qrCode = qrCodeRepository.findByQrUuid(qrUuid)
+                .orElseThrow(() -> new ParticipantNotFoundException("Участник с QR-кодом " + qrUuid + " не найден"));
+        Participant participant = qrCode.getParticipant();
         participant.setFirstName(request.firstName());
         participant.setLastName(request.lastName());
         participant.setMiddleName(request.middleName());
-        Participant updated = participantRepository.save(participant);
-        return participantMapper.toResponse(updated);
+        participantRepository.save(participant);
     }
 
-    public void delete(Long id) {
-        Participant participant = participantRepository.findById(id)
-                .orElseThrow(() -> new ParticipantNotFoundException(id));
-        participantRepository.delete(participant);
+    public void deleteByQrUuid(UUID qrUuid) {
+        QrCode qrCode = qrCodeRepository.findByQrUuid(qrUuid)
+                .orElseThrow(() -> new ParticipantNotFoundException("Участник с QR-кодом " + qrUuid + " не найден"));
+        participantRepository.delete(qrCode.getParticipant());
     }
 }

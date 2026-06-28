@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.qr_club.dto.AccessRequest;
 import org.example.qr_club.dto.AccessResponse;
 import org.example.qr_club.service.AccessService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import static org.example.qr_club.constants.ApiPaths.ACCESS;
 @RestController
 @RequestMapping(ACCESS)
 @RequiredArgsConstructor
+@Validated
 public class AccessController {
 
     private final AccessService accessService;

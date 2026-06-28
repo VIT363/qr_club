@@ -32,10 +32,6 @@ public class QrCodeService {
 
     public QrCodeResponse createQrCode(Long id) {
 
-        if (id == null) {
-            throw new BadRequestException("ID не может быть null");
-        }
-
         Participant participant = participantRepository.findById(id)
                 .orElseThrow(() -> new ParticipantNotFoundException(id));
         if (qrCodeRepository.findByParticipant_Id(id).isPresent()) {
@@ -49,20 +45,12 @@ public class QrCodeService {
 
     public QrCodeResponse regenerate(UUID qrUuid) {
 
-        if (qrUuid == null) {
-            throw new BadRequestException("ID не может быть null");
-        }
-
         QrCode qrCode = qrCodeRepository.findByQrUuid(qrUuid)
                 .orElseThrow(() -> new QrCodeNotFoundException(qrUuid));
         return saveAndMap(qrCode);
     }
 
     public void delete(UUID qrUuid) {
-
-        if (qrUuid == null) {
-            throw new BadRequestException("ID не может быть null");
-        }
 
         QrCode qrCode = qrCodeRepository.findByQrUuid(qrUuid)
                 .orElseThrow(() -> new QrCodeNotFoundException(qrUuid));

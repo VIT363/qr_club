@@ -10,6 +10,5 @@ public final class ApiPaths {
     public static final String PARTICIPANTS = API + "/participants";
     public static final String QR_CODES = API + "/qr-codes";
     public static final String ACCESS = API + V1 + "/access";
-    public static final String ID_PATCH = "/{id}";
     public static final String UUID_PATH = "/{uuid}";
 }
