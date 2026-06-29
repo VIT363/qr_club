@@ -5,10 +5,9 @@ public final class ApiPaths {
     private ApiPaths() {
     }
 
-    public static final String API = "/api";
-    public static final String V1 = "/v1";
-    public static final String PARTICIPANTS = API + "/participants";
-    public static final String QR_CODES = API + "/qr-codes";
-    public static final String ACCESS = API + V1 + "/access";
+    public static final String API_V1 = "/api/v1";
+    public static final String PARTICIPANTS = API_V1 + "/participants";
+    public static final String QR_CODES = API_V1 + "/qr-codes";
+    public static final String ACCESS = API_V1 + "/access";
     public static final String UUID_PATH = "/{uuid}";
 }
